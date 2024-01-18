@@ -3,6 +3,7 @@
 
 // init project
 var express = require('express');
+var moment = require('moment');
 var app = express();
 
 // enable CORS (https://en.wikipedia.org/wiki/Cross-origin_resource_sharing)
@@ -18,12 +19,29 @@ app.get("/", function (req, res) {
   res.sendFile(__dirname + '/views/index.html');
 });
 
+// the timestmap microservice api  
+app.get("/api/:date?", function (req, res) {
+  let {date} = req.params;
+  let new_date;
+  const timestampregex=/^\d+$/;
+  const dateregex=/^(\d{4}-\d{2}-\d{2}|(\d{2} [a-zA-Z]+ \d{4}, GMT))$/
+  if(!date){
+    new_date= new Date()
+  }else{
+       if(timestampregex.test(date)){
+      new_date=new Date(parseInt(date))
+    }else{
+      if(dateregex.test(date)){
+        new_date=new Date(date)
+      }else{
+      res.json({error:"Invalid Date"})
+        return;
+      }
+    }
 
-// your first API endpoint... 
-app.get("/api/hello", function (req, res) {
-  res.json({greeting: 'hello API'});
-});
-
+  }
+  res.json({unix:new_date.getTime(),utc:new_date.toUTCString()})
+ });
 
 
 // listen for requests :)
