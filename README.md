@@ -5,6 +5,6 @@ Welcome to the FreeCodeCamp Timestamp Microservice project, showcasing how to us
 
 Experience the timestamp magic in action! Check out the live deployment of this microservice on Render:
 
-https://momentous.onrender.com/ ✨
+https://momentous.onrender.com ✨
 
 Feel free to interact with the API and explore its capabilities!
